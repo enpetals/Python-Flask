@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Employee</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/employee.css') }}">
+</head>
+
+<body>
+    <form method="POST" class="form" action="{{ url_for('emproutes.handle_edit', index=index) }}">
+        <h2>Edit Employee info</h2>
+
+        <label>Name: <input required class="input" type="text" name="name" value="{{ employee.name }}"></label><br>
+
+        <label>Age: <input required class="input" type="text" name="age" value="{{ employee.age }}"></label><br>
+        <label>Date of Birth: <input required class="input" type="date" name="dob"></label><br>
+        <label>Salary: <input required class="input" type="text" name="salary"
+                value="{{ employee.salary }}"></label><br>
+        <label>Qualification: <input required class="input" type="text" name="qualification"
+                value="{{ employee.qualification }}"></label><br>
+        <input type="submit" class="submit" value="Save Changes">
+
+        <button class="submit" id="cancelButton" type="button">Cancel</button>
+    </form>
+
+    <script>
+        document.getElementById("cancelButton").addEventListener("click", function () {
+            window.location.href = "{{ url_for('emproutes.employee_list') }}";
+        });
+    </script>
+</body>
+
+</html>

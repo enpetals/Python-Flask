@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO APP WITH FLASK</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .Body{
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+        }
+        form{
+            width: 70vw;
+            height: 15vh;
+            display: flex;
+            justify-content: center;
+            border: 2px solid orangered;
+            align-items: center;
+        }
+        input{
+            width: 240px;
+            height: 5vh;
+            border-radius: 10px;
+            border: 2px orangered solid;
+            outline: none;
+            padding: 20px 10px;
+        }
+        button{
+            width: 70px;
+            height: 5vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 10px;
+            background: coral;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin: 0 1rem;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: large;
+        }
+        h1{
+            color: orangered;
+            font-size: xx-large;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        p{
+            color: #000;
+            text-transform: capitalize;   
+        }
+        a{
+            text-decoration: none;
+            list-style-type: none;
+        }
+        .delete{
+            color: red;
+        }
+        .edit{
+            color: coral;
+        }
+        .alert{
+            font-size: .8rem;
+        }
+        .alert.success{
+            color: green;
+        }
+        .alert.error{
+            color: red;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="Body">
+        {#{ request.args }#}
+
+        {# {2+2}} { JIJA SYNTAX: Outputting. #}
+
+
+        <h1> {{ title }} </h1>
+        {% set alerts = get_flashed_messages(with_categories=True) %}
+        {% for category, message in alerts %}
+<!--            <script>-->
+<!--                alert(`{{ message }}`)-->
+<!--            </script>-->
+
+            <p class="alert {{ category }}">{{ message }}</p>
+
+        {% endfor %}
+
+
+
+        <form action="{{ url_for('todo.todo_create') }}" method="post">
+            <input type="text" name="task" required>
+            <button type="submit">Add</button>
+        </form>
+
+        <div class="todo-container">
+            {% set todo_index, name = request.args.get('todo_id'), "Hugo" %}
+
+            <!-- {{ name|upper }} -->
+            {% for index, todo in todos %}
+                {% if todo_index and todo_index == index|string %}
+                    <form action="/todo/update/{{ index }}" method="post" class="">
+                        <p>
+                            <input type="text" value="{{ todo }}" name="task">
+                             <a href="/todo/delete/{{ index }}">Delete</a>
+                             <a href="{{ url_for('todo.todo_delete', index=index) }}" class="delete">Delete</a>
+                            <a href="/todo?todo_id={{ index }}">cancel</a>
+                            <button>save</button>
+                        </p>
+                    </form>
+                {% else %}
+                    <div class="">
+                        <p> 
+                            {{ index + 1}}. {{ todo }}
+                            <!-- <a href="/todo/delete/{{ index }}">Delete</a> -->
+                            <a href="{{ url_for('todo.todo_delete', index=index) }} " class="delete">Delete</a>
+                            <a href="/todo?todo_id={{ index }}" class="edit">Edit</a>
+                        </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<!--
+EMPLOYEE TABLE
+name
+salary
+age
+date
+
+name| age| salary| date|
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
